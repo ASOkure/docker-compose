@@ -16,7 +16,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "asokure/configserver:s6"
+    image: "asokure/configserver:config"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -34,7 +34,7 @@ services:
       service: network-deploy-service
 
   accounts:
-    image: "asokure/accounts:s6"
+    image: "asokure/accounts:config"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -47,7 +47,7 @@ services:
 
 
   loans:
-    image: "asokure/loans:s6"
+    image: "asokure/loans:config"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -59,7 +59,7 @@ services:
 
 
   cards:
-    image: "asokure/cards:s6"
+    image: "asokure/cards:config"
     container_name: cards-ms
     ports:
       - "9000:9000"
