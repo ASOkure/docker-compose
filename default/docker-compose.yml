@@ -24,7 +24,9 @@ services:
     networks:
       - bank
     environment:
+      SPRING_APPLICATION_NAME: "accounts"
       SPRING_CONFIG_IMPORT: "configsever:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
   loans:
     image: "asokure/loans:s6"
     container_name: loans-ms
@@ -36,6 +38,10 @@ services:
           memory: 700m
     networks:
       - bank
+    environment:
+      SPRING_APPLICATION_NAME: "loans"
+      SPRING_CONFIG_IMPORT: "configsever:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
   cards:
     image: "asokure/cards:s6"
     container_name: cards-ms
@@ -47,6 +53,10 @@ services:
           memory: 700m
     networks:
       - bank
+    environment:
+      SPRING_APPLICATION_NAME: "cards"
+      SPRING_CONFIG_IMPORT: "configsever:http://configserver:8071/"
+      SPRING_PROFILES_ACTIVE: default
 networks:
-  eazybank:
+  bank:
     driver: "bridge"
