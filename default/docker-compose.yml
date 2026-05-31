@@ -24,7 +24,7 @@ services:
     networks:
       - bank
     environment:
-      SPRING_CONFIG_IMPORT: "configsever:http://localhost:8071/"
+      SPRING_CONFIG_IMPORT: "configsever:http://configserver:8071/"
   loans:
     image: "asokure/loans:s6"
     container_name: loans-ms
