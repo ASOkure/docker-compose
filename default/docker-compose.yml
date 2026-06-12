@@ -1,13 +1,9 @@
 services:
-
   configserver:
-    image: "asokure/configserver:config"
+    image: "asokure/configserver:s8"
     container_name: configserver-ms
     ports:
       - "8071:8071"
-    depends_on:
-      rabbit:
-        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -16,10 +12,33 @@ services:
       start_period: 10s
     extends:
       file: common-config.yml
-      service: network-deploy-service
+      service: microservice-base-config
+
+
+  eurekaserver:
+    image: "asokure/eurekaserver:s8"
+    container_name: eurekaserver-ms
+    ports:
+      - "8070:8070"
+
+
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+      depends_on:
+        configserver:
+          condition: service_healthy
+      environment:
+        SPRING_APPLICATION_NAME: "eurekaserver"
 
   accounts:
-    image: "asokure/accounts:config"
+    image: "asokure/accounts:s8"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -32,7 +51,7 @@ services:
 
 
   loans:
-    image: "asokure/loans:config"
+    image: "asokure/loans:s8"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -44,7 +63,7 @@ services:
 
 
   cards:
-    image: "asokure/cards:config"
+    image: "asokure/cards:s8"
     container_name: cards-ms
     ports:
       - "9000:9000"
