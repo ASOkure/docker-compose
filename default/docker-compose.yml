@@ -16,7 +16,7 @@ services:
 
 
   eurekaserver:
-    image: "asokure/eurekaserver:s8"
+    image: "asokure/eurekaserver:s"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
